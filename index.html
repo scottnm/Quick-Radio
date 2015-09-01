@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Quick Radio</title>
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	</head>
+	<body>
+		<div id="ui-panel">
+			<input placeholder="Artist" type="text" />
+			<input placeholder="Album" type="text" />
+			<button class="btn btn-default">add to radio</button>
+		</div>
+		
+		<div id="radio-seeds">
+			<div class="radio-entry" data-bind="foreach: radioSeeds">
+				<div class="entry-image-wrapper">
+					<img data-bind="attr: {src: imgUrl}" />
+				</div>
+				<h3 class="entry-title" data-bind="text: album"></h3>
+				<h4 class="entry-subtitle" data-bind="text: artist"></h4>
+				<input class="slider" type="range" min="0" max="100" step="5" />
+			</div>
+		</div> 
+	</body>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
+	<script type="text/javascript" src="scripts/app.js"></script>
+</html>
