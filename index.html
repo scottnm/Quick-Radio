@@ -9,9 +9,10 @@
 	<body>
 		<div id="content-lane">
 			<div id="ui-panel">
-				<input placeholder="Artist" type="text" />
-				<input placeholder="Album" type="text" />
-				<button class="btn btn-default">add to radio</button>
+				<input placeholder="Artist" type="text" data-bind="value: artistInput"/>
+				<input placeholder="Album" type="text" data-bind="value: albumInput" />
+				<button class="btn btn-default" data-bind="click: processEntry">add radio seed</button>
+				<button class="btn btn-success" data-bind="click: generateRadio">generate radio</button>
 			</div>
 			
 			<div id="radio-seeds">

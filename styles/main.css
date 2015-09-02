@@ -31,3 +31,7 @@
 .radio-entry .slider {
 	flex: 1;
 }
+
+button {
+	text-transform: uppercase;
+}
