@@ -10,6 +10,10 @@
 	display: flex;
 }
 
+.radio-entry > * {
+	margin: 0 10px;
+}
+
 .radio-entry .entry-image-wrapper {
 	width: 100px;
 }
@@ -30,6 +34,12 @@
 
 .radio-entry .slider {
 	flex: 1;
+}
+
+.radio-entry .delete-button {
+	flex: 1;
+	max-width: 100px;
+	max-height: 50px;
 }
 
 button {

@@ -16,8 +16,8 @@
 			<div id="ui-panel">
 				<input placeholder="Artist" type="text" data-bind="value: artistInput"/>
 				<input placeholder="Album" type="text" data-bind="value: albumInput" />
-				<button class="btn btn-default" data-bind="click: processEntry">add radio seed</button>
-				<button class="btn btn-success" data-bind="click: generateRadio">generate radio</button>
+				<button class="btn btn-primary add-button" data-bind="click: addSeed">add radio seed</button>
+				<button class="btn btn-success generate-button" data-bind="click: generateRadio">generate radio</button>
 			</div>
 			
 			<div id="radio-seeds">
@@ -29,6 +29,7 @@
 					<h3 class="entry-title" data-bind="text: album"></h3>
 					<h3 class="entry-subtitle" data-bind="text: artist"></h4>
 					<input class="slider" type="range" min="0" max="100" step="5" />
+					<button class="btn btn-danger delete-button" data-bind="click: $root.removeSeed">delete</button>
 				</div>
 				</div>
 			</div> 
