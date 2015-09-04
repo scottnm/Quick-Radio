@@ -23,14 +23,16 @@
 			<div id="radio-seeds">
 				<div class="radio-entry-wrapper" data-bind="foreach: radioSeeds">
 					<div class="radio-entry">
-					<div class="entry-image-wrapper">
-						<img data-bind="attr: {src: imgUrl}" />
+						<div class="entry-image-wrapper">
+							<img data-bind="attr: {src: imgUrl}" />
+						</div>
+						<div class="entry-overlay">
+							<div class="entry-title" data-bind="text: album"></div>
+							<div class="entry-subtitle" data-bind="text: artist"></div>
+							<!--<input class="slider" type="range" min="0" max="100" step="5" />-->
+						</div>
+						<button class="overlay-button" data-bind="click: $root.removeSeed">delete</button>
 					</div>
-					<h3 class="entry-title" data-bind="text: album"></h3>
-					<h3 class="entry-subtitle" data-bind="text: artist"></h4>
-					<input class="slider" type="range" min="0" max="100" step="5" />
-					<button class="btn btn-danger delete-button" data-bind="click: $root.removeSeed">delete</button>
-				</div>
 				</div>
 			</div> 
 		</div>
