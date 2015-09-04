@@ -76,7 +76,7 @@
 
 .radio-entry .overlay-button:hover {
 	color: white;
-	background-color: rgba(0, 0, 0, 0.6);
+	background-color: rgba(255, 0, 0, 0.6);
 }
 
 .radio-entry .entry-image-wrapper img {
