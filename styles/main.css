@@ -17,45 +17,49 @@
 	justify-content: space-around;
 }
 
+.radio-entry {
+	display: flex;
+}
+
 .radio-entry-wrapper {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-around;
 }
 
-.radio-entry {
+.radio-tile {
 	position: relative;
 	width: 128px;
 	height: 128px;
 	margin-bottom: 15px;
 }
 
-.radio-entry > div,
-.radio-entry > button {
+.radio-tile > div,
+.radio-tile > button {
 	position: absolute;
 	top: 0;
 	left: 0;
 }
 
-.radio-entry .entry-overlay {
+.radio-tile .entry-overlay {
 	width: 100%;
 	margin-top: 10px;
 }
 
-.radio-entry .entry-overlay .entry-title {
+.radio-tile .entry-overlay .entry-title {
 	margin-bottom: 0px;
 	padding-bottom: 0px;
 	font-size: 24px;	
 }
 
-.radio-entry .entry-overlay .entry-subtitle {
+.radio-tile .entry-overlay .entry-subtitle {
 	margin-top: 0px;
 	padding-top: 0px;
 	font-size: 18px;
 }
 
-.radio-entry .entry-overlay .entry-title,
-.radio-entry .entry-overlay .entry-subtitle {
+.radio-tile .entry-overlay .entry-title,
+.radio-tile .entry-overlay .entry-subtitle {
 	padding-left: 10px;
 	background-color: rgba(0, 0, 0, 0.5);
 	color: white;
@@ -65,19 +69,19 @@
 	font-weight: 500;
 }
 
-.radio-entry:hover .entry-overlay .entry-title,
-.radio-entry:hover .entry-overlay .entry-subtitle {
+.radio-tile:hover .entry-overlay .entry-title,
+.radio-tile:hover .entry-overlay .entry-subtitle {
 	background-color: transparent;
 	color: transparent;
 }
 
-.radio-entry .entry-overlay .entry-title,
-.radio-entry .entry-overlay .entry-subtitle,
-.radio-entry .entry-overlay .slider {
+.radio-tile .entry-overlay .entry-title,
+.radio-tile .entry-overlay .entry-subtitle,
+.radio-tile .entry-overlay .slider {
 	position: relative;
 }
 
-.radio-entry .overlay-button {
+.radio-tile .overlay-button {
 	display: block;
 	color: transparent;
 	background-color: transparent;
@@ -85,17 +89,49 @@
 	border: none;
 }
 
-.radio-entry .overlay-button:hover {
+.radio-tile .overlay-button:hover {
 	color: white;
 	background-color: rgba(255, 0, 0, 0.6);
 }
 
-.radio-entry .entry-image-wrapper img {
+.radio-tile .entry-image-wrapper img {
 	border-radius: 7px;
 }
 
-.radio-entry .entry-image-wrapper img,
-.radio-entry .overlay-button {
+.radio-tile .entry-image-wrapper img,
+.radio-tile .overlay-button {
 	width: 100%;
 	height: 100%;
+}
+
+div.ratingbar {
+	position: relative;
+    left: 3px;
+    top: 50px;
+}
+
+.ratingbar > div {
+    width: 20px;
+    height: 10px;
+    background-color: transparent;
+    text-align: center;
+    margin-bottom: 7px;
+    border: solid 1px lightgray;
+}
+
+
+.ratingbar[data-rating="5"] div:nth-child(n+1) {
+	background-color: limegreen;
+}
+.ratingbar[data-rating="4"] div:nth-child(n+2) {
+	background-color: greenyellow;
+}
+.ratingbar[data-rating="3"] div:nth-child(n+3) {
+	background-color: gold;
+}
+.ratingbar[data-rating="2"] div:nth-child(n+4) {
+	background-color: lightsalmon;
+}
+.ratingbar[data-rating="1"] div:nth-child(n+5) {
+	background-color: pink;
 }

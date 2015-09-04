@@ -23,15 +23,24 @@
 			<div id="radio-seeds">
 				<div class="radio-entry-wrapper" data-bind="foreach: radioSeeds">
 					<div class="radio-entry">
-						<div class="entry-image-wrapper">
-							<img data-bind="attr: {src: imgUrl}" />
+						<div class="radio-tile">
+							<div class="entry-image-wrapper">
+								<img data-bind="attr: {src: imgUrl}" />
+							</div>
+							<div class="entry-overlay">
+								<div class="entry-title" data-bind="text: album"></div>
+								<div class="entry-subtitle" data-bind="text: artist"></div>
+								<!--<input class="slider" type="range" min="0" max="100" step="5" />-->
+							</div>
+							<button class="overlay-button" data-bind="click: $root.removeSeed"><span class="glyphicon glyphicon-remove"></span></button>
 						</div>
-						<div class="entry-overlay">
-							<div class="entry-title" data-bind="text: album"></div>
-							<div class="entry-subtitle" data-bind="text: artist"></div>
-							<!--<input class="slider" type="range" min="0" max="100" step="5" />-->
+						<div class="ratingbar" data-rating="1">
+						  <div></div>
+						  <div></div>
+						  <div></div>
+						  <div></div>
+						  <div></div>
 						</div>
-						<button class="overlay-button" data-bind="click: $root.removeSeed"><span class="glyphicon glyphicon-remove"></span></button>
 					</div>
 				</div>
 			</div> 
