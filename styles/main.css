@@ -19,7 +19,8 @@
 	margin-bottom: 15px;
 }
 
-.radio-entry > * {
+.radio-entry > div,
+.radio-entry > button {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -69,12 +70,17 @@
 	display: block;
 	color: transparent;
 	background-color: transparent;
+	border-radius: 7px;
 	border: none;
 }
 
 .radio-entry .overlay-button:hover {
 	color: white;
 	background-color: rgba(0, 0, 0, 0.6);
+}
+
+.radio-entry .entry-image-wrapper img {
+	border-radius: 7px;
 }
 
 .radio-entry .entry-image-wrapper img,
