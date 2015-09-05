@@ -7,8 +7,11 @@ var RadioSeed = function(artist, album, imgUrl) {
 	this.seedStrength = ko.observable('strength-1');
 	this.updateSeedStrength = function(seed, event) {
 		debugger;
-		if (event.target.classList.contains('strength-level')) {
+		if (event.target.classList.contains('strength-level') ||
+			event.target.classList.contains('strength-bar-pad')) {
 			seed.seedStrength(event.target.classList[1]);
+		} else if (event.target.closest('.strength-level')) {
+			debugger;
 		}
 	};
 }
