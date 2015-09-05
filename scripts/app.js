@@ -1,17 +1,24 @@
 'use strict;'
 
+// placeholder class until I'm retrieving real data from the api
 var RadioSeed = function(artist, album, imgUrl) {
 	this.artist = artist;
 	this.album = album;
 	this.imgUrl = imgUrl;
+	this.tracks = (function(name) {
+		var tracks = [];
+		while(name.length > 0) {
+			tracks.push('track_'+name.slice(0,1));
+			name = name.slice(1);
+		}
+		return tracks;
+	})(artist + album);
+	// non placeholder stuff, will be used after api
 	this.seedStrength = ko.observable('strength-1');
 	this.updateSeedStrength = function(seed, event) {
-		debugger;
 		if (event.target.classList.contains('strength-level') ||
 			event.target.classList.contains('strength-bar-pad')) {
 			seed.seedStrength(event.target.classList[1]);
-		} else if (event.target.closest('.strength-level')) {
-			debugger;
 		}
 	};
 }
@@ -59,7 +66,9 @@ var RadioListModel = function() {
 	self.generateRadio = function() {
 		console.log('Generating radio for...');
 		self.radioSeeds().forEach(function(seed){
-			console.log('%s - %s', seed.artist, seed.album);
+			seed.tracks.forEach(function(track) {
+				console.log('%s - %s - %s', seed.artist, seed.album, track);
+			});
 		});
 	};	
 };
