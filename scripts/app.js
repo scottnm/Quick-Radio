@@ -1,26 +1,25 @@
 'use strict;'
 
+var mockTracks = function(name) {
+	var tracks = [];
+	while(name.length > 0) {
+		tracks.push('track_'+name.slice(0,1));
+		name = name.slice(1);
+	}
+	return tracks.slice(0, 10);
+};
+
 // placeholder class until I'm retrieving real data from the api
 var RadioSeed = function(artist, album, imgUrl) {
 	this.artist = artist;
 	this.album = album;
 	this.imgUrl = imgUrl;
-	this.tracks = (function(name) {
-		var tracks = [];
-		while(name.length > 0) {
-			tracks.push('track_'+name.slice(0,1));
-			name = name.slice(1);
-		}
-		return tracks;
-	})(artist + album);
+	this.tracks = mockTracks(artist + album);
 	// non placeholder stuff, will be used after api
-	this.seedStrength = ko.observable('strength-1');
-	this.updateSeedStrength = function(seed, event) {
-		if (event.target.classList.contains('strength-level') ||
-			event.target.classList.contains('strength-bar-pad')) {
-			seed.seedStrength(event.target.classList[1]);
-		}
-	};
+	this.strength = ko.observable('strength-1');
+	this.strengthNum = ko.computed(function(){
+		return Number(this.strength()[this.strength().length - 1]);
+	}, this);
 }
 
 //var radioSeeds = [];
@@ -48,7 +47,6 @@ var RadioListModel = function() {
 			'http://www.spirit-animals.com/wp-content/uploads/2013/08/Penguin-3-African-x.jpg'));
 		self.artistInput('');
 		self.albumInput('');
-		console.log(self.radioSeeds);	
 	};
 	
 	/**
@@ -60,17 +58,35 @@ var RadioListModel = function() {
 		self.radioSeeds.remove(seed)
 	};
 	
-	/**
-	 * Take the seedlist and generate a radio-like playlist from it
-	 */
-	self.generateRadio = function() {
-		console.log('Generating radio for...');
-		self.radioSeeds().forEach(function(seed){
-			seed.tracks.forEach(function(track) {
-				console.log('%s - %s - %s', seed.artist, seed.album, track);
-			});
+	self.totalStrength = ko.computed(function() {
+		var sum = 0;
+		self.radioSeeds().forEach(function(seed) {
+			sum += seed.strengthNum();
 		});
-	};	
+		return sum;
+	});
+};
+
+/**
+ * Take the seedlist and generate a radio-like playlist from it
+ */
+RadioListModel.prototype.generateRadio = function() {
+	console.log('%d Generating radio for...', this.totalStrength());
+	var sumStrength = this.totalStrength();
+	var playlist = [];
+	this.radioSeeds().forEach(function(seed){
+		var percentage = seed.strengthNum() / sumStrength;
+		var numTracks = Math.ceil(seed.tracks.length * percentage);
+		playlist = playlist.concat(seed.tracks.slice(0, numTracks));
+	});
+	console.log(playlist);
+};
+
+RadioListModel.prototype.updateStrength = function(seed, event) {
+	if (event.target.classList.contains('strength-level') ||
+		event.target.classList.contains('strength-bar-pad')) {
+		seed.strength(event.target.classList[1]);
+	}
 };
 
 var model = new RadioListModel();
