@@ -6,7 +6,7 @@ var mockTracks = function(name) {
 		tracks.push('track_'+name.slice(0,1));
 		name = name.slice(1);
 	}
-	return tracks.slice(0, 10);
+	return tracks.slice(0, 10).sort(shuffleHelper);
 };
 
 // placeholder class until I'm retrieving real data from the api
@@ -79,6 +79,7 @@ RadioListModel.prototype.generateRadio = function() {
 		var numTracks = Math.ceil(seed.tracks.length * percentage);
 		playlist = playlist.concat(seed.tracks.slice(0, numTracks));
 	});
+	playlist.sort(shuffleHelper);
 	console.log(playlist);
 };
 
