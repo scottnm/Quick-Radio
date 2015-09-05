@@ -4,7 +4,7 @@
 		<title>Quick Radio</title>
 		<!-- Latest compiled and minified CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-		<link rel="stylesheet" href="styles/main.css">
+		<link rel="stylesheet" href="styles/main.css?v=1.32">
 	</head>
 	<body>
 		<div id="content-lane">
@@ -34,18 +34,19 @@
 							</div>
 							<button class="overlay-button" data-bind="click: $root.removeSeed"><span class="glyphicon glyphicon-remove"></span></button>
 						</div>
-						<div class="ratingbar" data-rating="1">
-						  <div></div>
-						  <div></div>
-						  <div></div>
-						  <div></div>
-						  <div></div>
+						<div class="strength-bar" data-bind="click: updateSeedStrength, css: seedStrength">
+						  <div class="strength-level strength-5"></div>
+						  <div class="strength-level strength-4"></div>
+						  <div class="strength-level strength-3"></div>
+						  <div class="strength-level strength-2"></div>
+						  <div class="strength-level strength-1"></div>
 						</div>
 					</div>
 				</div>
 			</div> 
 		</div>
 	</body>
+	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
 	<script type="text/javascript" src="scripts/app.js"></script>
 </html>

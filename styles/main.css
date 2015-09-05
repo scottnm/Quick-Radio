@@ -104,13 +104,13 @@
 	height: 100%;
 }
 
-div.ratingbar {
+.strength-bar {
 	position: relative;
     left: 3px;
     top: 50px;
 }
 
-.ratingbar > div {
+.strength-bar > .strength-level {
     width: 20px;
     height: 10px;
     background-color: transparent;
@@ -120,18 +120,18 @@ div.ratingbar {
 }
 
 
-.ratingbar[data-rating="5"] div:nth-child(n+1) {
+.strength-bar.strength-5 .strength-level:nth-child(n+1) {
 	background-color: limegreen;
 }
-.ratingbar[data-rating="4"] div:nth-child(n+2) {
+.strength-bar.strength-4 .strength-level:nth-child(n+2) {
 	background-color: greenyellow;
 }
-.ratingbar[data-rating="3"] div:nth-child(n+3) {
+.strength-bar.strength-3 .strength-level:nth-child(n+3) {
 	background-color: gold;
 }
-.ratingbar[data-rating="2"] div:nth-child(n+4) {
+.strength-bar.strength-2 .strength-level:nth-child(n+4) {
 	background-color: lightsalmon;
 }
-.ratingbar[data-rating="1"] div:nth-child(n+5) {
+.strength-bar.strength-1 .strength-level:nth-child(n+5) {
 	background-color: pink;
 }

@@ -4,6 +4,13 @@ var RadioSeed = function(artist, album, imgUrl) {
 	this.artist = artist;
 	this.album = album;
 	this.imgUrl = imgUrl;
+	this.seedStrength = ko.observable('strength-1');
+	this.updateSeedStrength = function(seed, event) {
+		debugger;
+		if (event.target.classList.contains('strength-level')) {
+			seed.seedStrength(event.target.classList[1]);
+		}
+	};
 }
 
 //var radioSeeds = [];
