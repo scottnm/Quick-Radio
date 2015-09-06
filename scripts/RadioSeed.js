@@ -9,14 +9,19 @@ var mockTracks = function(name) {
 	return tracks.slice(0, 10).sort(shuffleHelper);
 };
 
-// placeholder class until I'm retrieving real data from the api
-function RadioSeed(artist, imgUrl) {
-	this.artist = artist;
-	this.imgUrl = imgUrl;
+function RadioSeed(artist) {
+	this.artist = ko.observable(artist);
+	this.id = '';
+	this.imgUrl = ko.observable('http://www.spirit-animals.com/wp-content/uploads/2013/08/Penguin-3-African-x.jpg');
 	this.tracks = mockTracks(artist);
-	// non placeholder stuff, will be used after api
 	this.strength = ko.observable('strength-1');
 	this.strengthNum = ko.computed(function(){
 		return Number(this.strength()[this.strength().length - 1]);
 	}, this);
+	
+	$.getJSON(spotifyArtistGetUrl(artist), function(data){
+		this.artist(data['artists']['items'][0]['name']);
+		this.imgUrl(data['artists']['items'][0]['images'][0]['url']);
+		this.id = data['artists']['items'][0]['id'];
+	}.bind(this));
 }

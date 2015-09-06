@@ -31,8 +31,7 @@ RadioListModel.prototype.addSeed = function() {
 	if(!this.artistInput()) {
 		return;
 	}
-	this.radioSeeds.push(new RadioSeed(this.artistInput(),
-		'http://www.spirit-animals.com/wp-content/uploads/2013/08/Penguin-3-African-x.jpg'));
+	this.radioSeeds.push(new RadioSeed(this.artistInput()));
 	this.artistInput('');
 };
 
