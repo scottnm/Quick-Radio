@@ -62,9 +62,14 @@ RadioListModel.prototype.generateRadio = function() {
 	var sumStrength = this.totalStrength();
 	var playlist = [];
 	this.radioSeeds().forEach(function(seed){
+		seed.stale = true;
 		var percentage = seed.strengthNum() / sumStrength;
 		var numTracks = Math.ceil(seed.tracks.length * percentage);
 		playlist = playlist.concat(seed.tracks.slice(0, numTracks));
+		if(seed.stale) {
+			// fetch another playlist from echonest
+			seed.stale = false; // place in callback
+		}
 	});
 	playlist.sort(shuffleHelper);
 	console.log(playlist);

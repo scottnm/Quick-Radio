@@ -18,4 +18,5 @@ function RadioSeed(artist, imgUrl, id) {
 	this.strengthNum = ko.computed(function(){
 		return Number(this.strength()[this.strength().length - 1]);
 	}, this);
+	this.stale = false;
 }
