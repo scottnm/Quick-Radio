@@ -139,3 +139,9 @@
 .strength-bar.strength-1 .strength-level:nth-child(10) {
 	background-color: pink;
 }
+
+#error-toast {
+	position: absolute;
+	left: 20px;
+	bottom: 20px;
+}

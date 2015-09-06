@@ -24,15 +24,25 @@ function RadioListModel() {
 
 /**
  * add a seed from the input fields to the seedlist
- * pre: both input fields must be filled in
+ * pre: input field must be filled in
  */
 RadioListModel.prototype.addSeed = function() {
-	// ensure that both fields are filled in
+	// ensure that input is given
 	if(!this.artistInput()) {
 		return;
 	}
-	this.radioSeeds.push(new RadioSeed(this.artistInput()));
-	this.artistInput('');
+	
+	$.getJSON(spotifyArtistGetUrl(this.artistInput()), function(data){
+		if (data['artists']['items'].length == 0) {
+			showErrorToast(this.artistInput());
+			return;
+		}
+		var artistName = data['artists']['items'][0]['name'];
+		var imgUrl = data['artists']['items'][0]['images'][0]['url'];
+		var id = data['artists']['items'][0]['id'];
+		this.radioSeeds.push(new RadioSeed(artistName, imgUrl, id));
+		this.artistInput('');
+	}.bind(this));
 };
 
 /**
