@@ -62,16 +62,18 @@ RadioListModel.prototype.generateRadio = function() {
 	var sumStrength = this.totalStrength();
 	var playlist = [];
 	this.radioSeeds().forEach(function(seed){
-		seed.stale = true;
 		var percentage = seed.strengthNum() / sumStrength;
 		var numTracks = Math.ceil(seed.tracks.length * percentage);
 		playlist = playlist.concat(seed.tracks.slice(0, numTracks));
 		if(seed.stale) {
 			// fetch another playlist from echonest
-			seed.stale = false; // place in callback
+			$.getJSON(echonestArtistPlaylistGetUrl(seed.artist(), 15))
+				.done(getTracksCallback.bind(seed));
 		}
+		seed.stale = true;
 	});
 	playlist.sort(shuffleHelper);
+	console.log('Here is the finished playlist');
 	console.log(playlist);
 };
 

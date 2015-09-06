@@ -1,8 +1,8 @@
 "use strict";
+$.ajaxSetup({ cache: false });
 
-var apiData = {
-    spotifyKey: '',
-    echonestKey: 'SIKZGGF4TKV8DL8TE'
+var config = {
+    echonestKey: 'SIKZGGF4TKV8DL8TE',
 };
 
 function shuffleHelper() {
@@ -12,6 +12,12 @@ function shuffleHelper() {
 function spotifyArtistGetUrl(artistName) {
     return 'https://api.spotify.com/v1/search?q=' +
         artistName.replace(/[' ']/g, '%20') + '&type=artist';
+}
+
+function echonestArtistPlaylistGetUrl(artistName, numSongs) {
+    return 'https://developer.echonest.com/api/v4/playlist/static?api_key=' +
+        config.echonestKey + '&artist=' + artistName +
+        '&type=artist-radio&results=' + numSongs;
 }
 
 function showErrorToast(invalidName) {
