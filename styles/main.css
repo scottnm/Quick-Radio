@@ -81,7 +81,10 @@
 	position: relative;
 }
 
+.radio-tile .entry-image-container,
 .radio-tile .overlay-button {
+	width: 100%;
+	height: 100%;
 	display: block;
 	color: transparent;
 	background-color: transparent;
@@ -89,19 +92,15 @@
 	border: none;
 }
 
+.radio-tile .entry-image-container {
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+}
+
 .radio-tile .overlay-button:hover {
 	color: white;
 	background-color: rgba(255, 0, 0, 0.6);
-}
-
-.radio-tile .entry-image-wrapper img {
-	border-radius: 7px;
-}
-
-.radio-tile .entry-image-wrapper img,
-.radio-tile .overlay-button {
-	width: 100%;
-	height: 100%;
 }
 
 .strength-bar {
