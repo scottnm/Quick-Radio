@@ -10,11 +10,10 @@ var mockTracks = function(name) {
 };
 
 // placeholder class until I'm retrieving real data from the api
-function RadioSeed(artist, album, imgUrl) {
+function RadioSeed(artist, imgUrl) {
 	this.artist = artist;
-	this.album = album;
 	this.imgUrl = imgUrl;
-	this.tracks = mockTracks(artist + album);
+	this.tracks = mockTracks(artist);
 	// non placeholder stuff, will be used after api
 	this.strength = ko.observable('strength-1');
 	this.strengthNum = ko.computed(function(){

@@ -11,7 +11,6 @@ var model = new RadioListModel();
 function RadioListModel() {
 	var self = this;
 	self.artistInput = ko.observable();
-	self.albumInput = ko.observable();
 	self.radioSeeds = ko.observableArray([]);
 	
 	self.totalStrength = ko.computed(function() {
@@ -29,13 +28,12 @@ function RadioListModel() {
  */
 RadioListModel.prototype.addSeed = function() {
 	// ensure that both fields are filled in
-	if(!this.artistInput() || !this.albumInput()) {
+	if(!this.artistInput()) {
 		return;
 	}
-	this.radioSeeds.push(new RadioSeed(this.artistInput(), this.albumInput(),
+	this.radioSeeds.push(new RadioSeed(this.artistInput(),
 		'http://www.spirit-animals.com/wp-content/uploads/2013/08/Penguin-3-African-x.jpg'));
 	this.artistInput('');
-	this.albumInput('');
 };
 
 /**

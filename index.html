@@ -15,7 +15,6 @@
 			
 			<div id="ui-panel">
 				<input placeholder="Artist" type="text" data-bind="value: artistInput"/>
-				<input placeholder="Album" type="text" data-bind="value: albumInput" />
 				<button class="btn btn-primary add-button" data-bind="click: addSeed">add radio seed</button>
 				<button class="btn btn-success generate-button" data-bind="click: generateRadio">generate radio</button>
 			</div>
@@ -28,8 +27,7 @@
 								<img data-bind="attr: {src: imgUrl}" />
 							</div>
 							<div class="entry-overlay">
-								<div class="entry-title" data-bind="text: album"></div>
-								<div class="entry-subtitle" data-bind="text: artist"></div>
+								<div class="entry-title" data-bind="text: artist"></div>
 								<!--<input class="slider" type="range" min="0" max="100" step="5" />-->
 							</div>
 							<button class="overlay-button" data-bind="click: $root.removeSeed"><span class="glyphicon glyphicon-remove"></span></button>
