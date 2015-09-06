@@ -74,7 +74,12 @@ RadioListModel.prototype.generateRadio = function() {
 	});
 	playlist.sort(shuffleHelper);
 	console.log('Here is the finished playlist');
-	console.log(playlist);
+	var trackNum = 1;
+	playlist.forEach(function(entry){
+		console.log('Track  #%d\t%s - %s', trackNum, entry.artist_name, entry.title);
+		trackNum += 1;
+	});
+	
 };
 
 RadioListModel.prototype.updateStrength = function(seed, event) {
