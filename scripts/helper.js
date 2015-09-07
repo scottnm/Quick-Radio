@@ -23,4 +23,12 @@ function echonestArtistPlaylistGetUrl(artistName, numSongs) {
 function showErrorToast(invalidName) {
     $('#error-toast').text(invalidName + ' returned no results')
         .fadeIn(500).delay(2000).fadeOut(500);
-};
+}
+
+function logTracks(tracklist) {
+	var trackNum = 1;
+	playlist.forEach(function(entry){
+		console.log('Track  #%d\t%s - %s', trackNum, entry.artist_name, entry.title);
+		trackNum += 1;
+	});
+}

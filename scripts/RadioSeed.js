@@ -1,4 +1,5 @@
 "use strict";
+$.ajaxSetup({ cache: false });
 
 var mockTracks = function(name) {
 	var tracks = [];
@@ -24,6 +25,4 @@ function RadioSeed(artist, imgUrl, id) {
 	this.strengthNum = ko.computed(function(){
 		return Number(this.strength()[this.strength().length - 1]);
 	}, this);
-	$.getJSON(echonestArtistPlaylistGetUrl(this.artist(), 15))
-		.done(getTracksCallback.bind(this));
 }
