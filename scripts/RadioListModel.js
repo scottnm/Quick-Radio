@@ -5,7 +5,13 @@ var model = new RadioListModel();
 function RadioListModel() {
 	var self = this;
 	self.artistInput = ko.observable();
-	self.radioSeeds = ko.observableArray([]);
+	self.newRadioSeeds = ko.observableArray([]);
+	self.oldRadioSeeds = ko.observableArray([]);
+	self.pendingRadioSeeds = ko.observableArray([]);
+	self.radioSeeds = ko.computed(function(){
+		return this.newRadioSeeds().concat(this.pendingRadioSeeds())
+			.concat(this.oldRadioSeeds());
+	}.bind(self));
 	
 	self.totalStrength = ko.computed(function() {
 		var sum = 0;
@@ -34,7 +40,7 @@ RadioListModel.prototype.addSeed = function() {
 		var artistName = data['artists']['items'][0]['name'];
 		var imgUrl = data['artists']['items'][0]['images'][0]['url'];
 		var id = data['artists']['items'][0]['id'];
-		this.radioSeeds.push(new RadioSeed(artistName, imgUrl, id));
+		this.newRadioSeeds.push(new RadioSeed(artistName, imgUrl, id));
 		this.artistInput('');
 	}.bind(this));
 };
@@ -45,7 +51,9 @@ RadioListModel.prototype.addSeed = function() {
  * @param seed The seed to remove
  */
 RadioListModel.prototype.removeSeed = function(seed) {
-	this.radioSeeds.remove(seed)
+	this.newRadioSeeds.remove(seed);
+	this.oldRadioSeeds.remove(seed);
+	this.pendingRadioSeeds.remove(seed);
 }.bind(model);
 
 /**
