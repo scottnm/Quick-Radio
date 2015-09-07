@@ -106,6 +106,7 @@ RadioListModel.prototype.generateRadio = function() {
 			$('#loading-animation').addClass('hidden'); // toggle on
 			console.log('Here is the finished playlist');
 			logTracks(playlist);
+			constructSpotifyController(playlist);
 		}.bind(this));
 };
 

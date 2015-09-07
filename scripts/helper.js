@@ -91,3 +91,17 @@ function foreignIdToSpotifyId(foreignId) {
     var idChunks = foreignId.split(':');
     return idChunks[idChunks.length - 1];
 }
+
+/**
+ * Constructs the Spotify Controller
+ * @param playlist the list of echonest track objects
+ */
+ function constructSpotifyController(playlist) {
+    var track_ids = '';
+    playlist.forEach(function(track){
+        track_ids += track.spotify_id+',';
+    });
+    track_ids = track_ids.slice(0, track_ids.length - 1);
+    var embedPlayer = '<iframe src="https://embed.spotify.com/?uri=spotify:trackset:quick-radio:' + track_ids + '" frameborder="0" allowtransparency="true"></iframe>';
+    $('#player-container').html(embedPlayer);
+ }
