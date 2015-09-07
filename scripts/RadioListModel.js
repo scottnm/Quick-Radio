@@ -32,10 +32,22 @@ RadioListModel.prototype.addSeed = function() {
 	}
 	
 	$.getJSON(spotifyArtistGetUrl(this.artistInput()), function(data){
+		// ensure valid search query
 		if (data['artists']['items'].length == 0) {
-			showErrorToast(this.artistInput());
+			showErrorToast(this.artistInput() + ' returned no results');
 			return;
 		}
+
+		// ensure no duplicates
+		var entryId = data['artists']['items'][0]['id'];
+		for(var i in this.radioSeeds()) {
+			var seed = this.radioSeeds()[i];
+			if(seed.id === entryId) {
+				showErrorToast(this.artistInput() + ' is a duplicate entry');
+				return;
+			}
+		}
+
 		var artistName = data['artists']['items'][0]['name'];
 		var imgUrl = data['artists']['items'][0]['images'][0]['url'];
 		var id = data['artists']['items'][0]['id'];

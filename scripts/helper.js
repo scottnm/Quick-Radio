@@ -41,8 +41,8 @@ function echonestArtistPlaylistGetUrl(artistName, numSongs) {
 /**
  * Fades the error toast on the page in and out of view
  */
-function showErrorToast(invalidName) {
-    $('#error-toast').text(invalidName + ' returned no results')
+function showErrorToast(msg) {
+    $('#error-toast').text(msg)
         .fadeIn(500).delay(2000).fadeOut(500);
 }
 
