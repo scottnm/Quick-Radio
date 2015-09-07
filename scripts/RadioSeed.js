@@ -1,20 +1,4 @@
 "use strict";
-$.ajaxSetup({ cache: false });
-
-var mockTracks = function(name) {
-	var tracks = [];
-	while(name.length > 0) {
-		tracks.push('track_'+name.slice(0,1));
-		name = name.slice(1);
-	}
-	return tracks.slice(0, 10).sort(shuffleHelper);
-};
-
-function getTracksCallback(data) {
-	this.tracks = data['response']['songs'];
-	console.log('tracks for %s', this.artist());
-	console.log(this.tracks);
-}
 
 function RadioSeed(artist, imgUrl, id) {
 	this.artist = ko.observable(artist);

@@ -1,11 +1,4 @@
 "use strict";
-$.ajaxSetup({ cache: false });
-
-//var radioSeeds = [];
-// for(var i = 0; i < 10; i++) {
-// 	radioSeeds.push(new radioSeed('artist_' + i, 'album_' + i,
-// 		'http://www.spirit-animals.com/wp-content/uploads/2013/08/Penguin-3-African-x.jpg'));
-// }
 
 var model = new RadioListModel();
 
@@ -63,6 +56,10 @@ RadioListModel.prototype.generateRadio = function() {
 	var sumStrength = this.totalStrength();
 	var playlist = [];
 	var seedPromises = [];
+	/**
+	 * for each seed generate a promise that sends its sliced tracklist
+	 * to the resolve
+	 */
 	this.radioSeeds().forEach(function(seed){
 		var seedPromise = new Promise(function(resolve, reject){
 			$.getJSON(echonestArtistPlaylistGetUrl(seed.artist(), 15), function(data) {
@@ -76,6 +73,11 @@ RadioListModel.prototype.generateRadio = function() {
 		});
 		seedPromises.push(seedPromise)
 	});
+	
+	/**
+	 * When all api calls have come back, concatenate all of the tracklists
+	 * into a playlist
+	 */
 	Promise.all(seedPromises)
 		.then(function(tracklists) {
 			tracklists.forEach(function(tracklist) {
@@ -87,6 +89,12 @@ RadioListModel.prototype.generateRadio = function() {
 		});
 };
 
+/**
+ * updates radio seeds strength when the strengthbar is clicked
+ * in the view.
+ * @param seed the seed to update
+ * @event the browser event that contains the target of the click
+ */
 RadioListModel.prototype.updateStrength = function(seed, event) {
 	if (event.target.classList.contains('strength-level') ||
 		event.target.classList.contains('strength-bar-pad')) {
