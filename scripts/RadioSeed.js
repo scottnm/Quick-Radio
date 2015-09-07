@@ -13,7 +13,6 @@ function getTracksCallback(data) {
 	this.tracks = data['response']['songs'];
 	console.log('tracks for %s', this.artist());
 	console.log(this.tracks);
-	this.stale = false;
 }
 
 function RadioSeed(artist, imgUrl, id) {
@@ -25,7 +24,6 @@ function RadioSeed(artist, imgUrl, id) {
 	this.strengthNum = ko.computed(function(){
 		return Number(this.strength()[this.strength().length - 1]);
 	}, this);
-	this.stale = false;
 	$.getJSON(echonestArtistPlaylistGetUrl(this.artist(), 15))
 		.done(getTracksCallback.bind(this));
 }

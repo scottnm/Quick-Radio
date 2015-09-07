@@ -65,12 +65,9 @@ RadioListModel.prototype.generateRadio = function() {
 		var percentage = seed.strengthNum() / sumStrength;
 		var numTracks = Math.ceil(seed.tracks.length * percentage);
 		playlist = playlist.concat(seed.tracks.slice(0, numTracks));
-		if(seed.stale) {
-			// fetch another playlist from echonest
-			$.getJSON(echonestArtistPlaylistGetUrl(seed.artist(), 15))
-				.done(getTracksCallback.bind(seed));
-		}
-		seed.stale = true;
+		// fetch another playlist from echonest
+		$.getJSON(echonestArtistPlaylistGetUrl(seed.artist(), 15))
+			.done(getTracksCallback.bind(seed));
 	});
 	playlist.sort(shuffleHelper);
 	console.log('Here is the finished playlist');
