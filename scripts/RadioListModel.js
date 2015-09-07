@@ -53,6 +53,7 @@ RadioListModel.prototype.removeSeed = function(seed) {
  */
 RadioListModel.prototype.generateRadio = function() {
 	console.log('%d Generating radio for...', this.totalStrength());
+	$('#loading-animation').removeClass('hidden'); // toggle off
 	var sumStrength = this.totalStrength();
 	var playlist = [];
 	var seedPromises = [];
@@ -84,6 +85,7 @@ RadioListModel.prototype.generateRadio = function() {
 				playlist = playlist.concat(tracklist);
 			});
 			playlist.sort(shuffleHelper);
+			$('#loading-animation').addClass('hidden'); // toggle on
 			console.log('Here is the finished playlist');
 			logTracks(playlist);
 		});

@@ -2,9 +2,6 @@
 	padding-left: 5%;
 	padding-right: 5%;
 	border-radius: 10px;
-}
-
-#content-lane > div {
 	margin-top: 30px;
 }
 
@@ -15,6 +12,10 @@
 #ui-panel {
 	display: flex;
 	justify-content: space-around;
+}
+
+#radio-seeds {
+	margin-top: 30px;
 }
 
 .radio-entry {
@@ -137,6 +138,21 @@
 }
 .strength-bar.strength-1 .strength-level:nth-child(10) {
 	background-color: pink;
+}
+
+#loading-animation.load-container.load1 {
+	position: absolute;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.7);
+}
+
+#loading-animation h1 {
+	text-align: center;
+	color: white;
+	transform: translateY(20px);
+	text-shadow: 2px 2px rgb(10, 10, 10);
 }
 
 #error-toast {
