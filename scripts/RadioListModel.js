@@ -46,14 +46,8 @@ RadioListModel.prototype.addSeed = function() {
 		// a promise is used so that track data can be loaded now and used later
 		// during playlist generation for better performance.
 		var seedPromise = new Promise(function(resolve, reject){
-			$.getJSON(echonestArtistPlaylistGetUrl(this.artist(), 15), function(data) {
-				this.tracks = data['response']['songs'];
-				var ratio = this.strengthNum() / totalStrength;
-				var numTracks = Math.ceil(this.tracks.length * ratio);
-				console.log('tracks for %s', this.artist());
-				logTracks(this.tracks);
-				resolve(this.tracks.slice(0, numTracks));
-			}.bind(this));
+			$.getJSON(echonestArtistPlaylistGetUrl(this.artist(), 15),
+			          processEchonestResponse.bind(this, resolve, totalStrength));
 		}.bind(newSeed));
 		this.newSeedPromises.push(seedPromise);
 		this.artistInput('');
@@ -76,7 +70,7 @@ RadioListModel.prototype.removeSeed = function(seed) {
 RadioListModel.prototype.generateRadio = function() {
 	console.log('%d Generating radio for...', this.totalStrength());
 	$('#loading-animation').removeClass('hidden'); // toggle off
-	var sumStrength = this.totalStrength();
+	var totalStrength = this.totalStrength();
 	var playlist = [];
 	// copy the array so to prevent sync issues
 	var seedPromises = [].concat(this.newSeedPromises);
@@ -88,14 +82,8 @@ RadioListModel.prototype.generateRadio = function() {
 	 */
 	this.oldRadioSeeds().forEach(function(seed){
 		var seedPromise = new Promise(function(resolve, reject){
-			$.getJSON(echonestArtistPlaylistGetUrl(seed.artist(), 15), function(data) {
-				this.tracks = data['response']['songs'];
-				var ratio = this.strengthNum() / sumStrength;
-				var numTracks = Math.ceil(this.tracks.length * ratio);
-				console.log('tracks for %s', this.artist());
-				logTracks(this.tracks);
-				resolve(this.tracks.slice(0, numTracks));
-			}.bind(seed));
+			$.getJSON(echonestArtistPlaylistGetUrl(seed.artist(), 15),
+					  processEchonestResponse.bind(seed, totalStrength));
 		});
 		seedPromises.push(seedPromise);
 	});

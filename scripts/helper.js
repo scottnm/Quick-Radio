@@ -31,9 +31,11 @@ function spotifyArtistGetUrl(artistName) {
  * @param numSongs the number of songs to fetch from the echonest api
  */
 function echonestArtistPlaylistGetUrl(artistName, numSongs) {
-    return 'https://developer.echonest.com/api/v4/playlist/static?api_key=' +
-        config.echonestKey + '&artist=' + artistName +
-        '&type=artist-radio&results=' + numSongs;
+    return 'http://developer.echonest.com/api/v4/playlist/static?api_key=' +
+            config.echonestKey+ '&artist=' + artistName +
+            '&format=json&results=' + numSongs +
+            '&type=artist-radio&bucket=id:spotify&bucket=tracks&limit=true';
+
 }
 
 /**
@@ -53,4 +55,39 @@ function logTracks(tracklist) {
 		console.log('Track  #%d\t%s - %s', trackNum, entry.artist_name, entry.title);
 		trackNum += 1;
 	});
+}
+
+/**
+ * @param promiseResolution the resolve function for the promise used for the
+ *                          echonest response
+ * @param totalStrength the combined strength of all of the radio seeds
+ * @param data the data sent back from the json get request to the echonest api
+ */
+function processEchonestResponse(promiseResolution, totalStrength, data) {
+	this.tracks = data['response']['songs'];
+	preprocessTracks(this.tracks);
+	var ratio = this.strengthNum() / totalStrength;
+	var numTracks = Math.ceil(this.tracks.length * ratio);
+	console.log('tracks for %s', this.artist());
+	logTracks(this.tracks);
+	promiseResolution(this.tracks.slice(0, numTracks));
+}
+
+/**
+ * Make echonest's track data more manageable
+ * @param tracklist the list of tracks to process
+ */
+function preprocessTracks(tracklist) {
+    tracklist.forEach(function(track){
+        track.default_track = track.tracks[0];
+		track.spotify_id = foreignIdToSpotifyId(track.default_track.foreign_id);
+	});
+}
+
+/**
+ * converts an echonest foreign id to a spotify id
+ */
+function foreignIdToSpotifyId(foreignId) {
+    var idChunks = foreignId.split(':');
+    return idChunks[idChunks.length - 1];
 }
