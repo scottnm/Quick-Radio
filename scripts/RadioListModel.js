@@ -6,11 +6,10 @@ function RadioListModel() {
 	var self = this;
 	self.artistInput = ko.observable();
 	self.newRadioSeeds = ko.observableArray([]);
+	self.newSeedPromises = [];
 	self.oldRadioSeeds = ko.observableArray([]);
-	self.pendingRadioSeeds = ko.observableArray([]);
 	self.radioSeeds = ko.computed(function(){
-		return this.newRadioSeeds().concat(this.pendingRadioSeeds())
-			.concat(this.oldRadioSeeds());
+		return this.newRadioSeeds().concat(this.oldRadioSeeds());
 	}.bind(self));
 	
 	self.totalStrength = ko.computed(function() {
@@ -40,7 +39,23 @@ RadioListModel.prototype.addSeed = function() {
 		var artistName = data['artists']['items'][0]['name'];
 		var imgUrl = data['artists']['items'][0]['images'][0]['url'];
 		var id = data['artists']['items'][0]['id'];
-		this.newRadioSeeds.push(new RadioSeed(artistName, imgUrl, id));
+		var newSeed = new RadioSeed(artistName, imgUrl, id);
+		this.newRadioSeeds.push(newSeed);
+		// have to capture the total strength within this closure
+		var totalStrength = this.totalStrength();
+		// a promise is used so that track data can be loaded now and used later
+		// during playlist generation for better performance.
+		var seedPromise = new Promise(function(resolve, reject){
+			$.getJSON(echonestArtistPlaylistGetUrl(this.artist(), 15), function(data) {
+				this.tracks = data['response']['songs'];
+				var ratio = this.strengthNum() / totalStrength;
+				var numTracks = Math.ceil(this.tracks.length * ratio);
+				console.log('tracks for %s', this.artist());
+				logTracks(this.tracks);
+				resolve(this.tracks.slice(0, numTracks));
+			}.bind(this));
+		}.bind(newSeed));
+		this.newSeedPromises.push(seedPromise);
 		this.artistInput('');
 	}.bind(this));
 };
@@ -53,7 +68,6 @@ RadioListModel.prototype.addSeed = function() {
 RadioListModel.prototype.removeSeed = function(seed) {
 	this.newRadioSeeds.remove(seed);
 	this.oldRadioSeeds.remove(seed);
-	this.pendingRadioSeeds.remove(seed);
 }.bind(model);
 
 /**
@@ -64,12 +78,15 @@ RadioListModel.prototype.generateRadio = function() {
 	$('#loading-animation').removeClass('hidden'); // toggle off
 	var sumStrength = this.totalStrength();
 	var playlist = [];
-	var seedPromises = [];
+	// copy the array so to prevent sync issues
+	var seedPromises = [].concat(this.newSeedPromises);
+	this.newSeedPromises = [];
+	
 	/**
 	 * for each seed generate a promise that sends its sliced tracklist
 	 * to the resolve
 	 */
-	this.radioSeeds().forEach(function(seed){
+	this.oldRadioSeeds().forEach(function(seed){
 		var seedPromise = new Promise(function(resolve, reject){
 			$.getJSON(echonestArtistPlaylistGetUrl(seed.artist(), 15), function(data) {
 				this.tracks = data['response']['songs'];
@@ -80,7 +97,7 @@ RadioListModel.prototype.generateRadio = function() {
 				resolve(this.tracks.slice(0, numTracks));
 			}.bind(seed));
 		});
-		seedPromises.push(seedPromise)
+		seedPromises.push(seedPromise);
 	});
 	
 	/**
@@ -92,11 +109,16 @@ RadioListModel.prototype.generateRadio = function() {
 			tracklists.forEach(function(tracklist) {
 				playlist = playlist.concat(tracklist);
 			});
+			
+			// move the newSeeds to the oldSeeds list to prevent duplication
+			this.oldRadioSeeds(this.oldRadioSeeds().concat(this.newRadioSeeds()));
+			this.newRadioSeeds([]);
+			
 			playlist.sort(shuffleHelper);
 			$('#loading-animation').addClass('hidden'); // toggle on
 			console.log('Here is the finished playlist');
 			logTracks(playlist);
-		});
+		}.bind(this));
 };
 
 /**
